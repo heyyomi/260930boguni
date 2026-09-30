@@ -12,7 +12,7 @@ import { TeacherPasswordModal } from './components/TeacherPasswordModal';
 import { SmartboardCelebrationOverlay } from './components/SmartboardCelebrationOverlay';
 import { QrCodeShareModal } from './components/QrCodeShareModal';
 import { ClaimRecord, GoogleSheetsConfig, PrizeStat } from './types';
-import { PRIZES, STORAGE_KEYS } from './constants/prizes';
+import { PRIZES, STORAGE_KEYS, DEFAULT_GAS_WEB_APP_URL } from './constants/prizes';
 import { 
   saveRecordToGas, 
   fetchRecordsFromGas, 
@@ -47,18 +47,26 @@ export default function App() {
     const saved = localStorage.getItem(STORAGE_KEYS.GAS_CONFIG);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (parsed.webAppUrl && parsed.webAppUrl.trim().startsWith('http')) {
+          return {
+            ...parsed,
+            isConnected: true,
+          };
+        }
       } catch (e) {
         // fallback
       }
     }
-    return {
-      webAppUrl: '',
-      isConnected: false,
+    const defaultCfg: GoogleSheetsConfig = {
+      webAppUrl: DEFAULT_GAS_WEB_APP_URL,
+      isConnected: true,
       lastSyncAt: null,
       autoSync: true,
-      syncInterval: 6,
+      syncInterval: 5,
     };
+    localStorage.setItem(STORAGE_KEYS.GAS_CONFIG, JSON.stringify(defaultCfg));
+    return defaultCfg;
   });
 
   // Claims state

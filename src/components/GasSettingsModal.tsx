@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { GoogleSheetsConfig } from '../types';
 import { CODE_GS_SCRIPT, testGasConnection } from '../services/gasService';
+import { DEFAULT_GAS_WEB_APP_URL } from '../constants/prizes';
 
 interface GasSettingsModalProps {
   isOpen: boolean;
@@ -29,7 +30,7 @@ export const GasSettingsModal: React.FC<GasSettingsModalProps> = ({
   onSaveConfig,
   onResetToLocalOnly,
 }) => {
-  const [url, setUrl] = useState<string>(config.webAppUrl || '');
+  const [url, setUrl] = useState<string>(config.webAppUrl || DEFAULT_GAS_WEB_APP_URL);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isTesting, setIsTesting] = useState<boolean>(false);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
@@ -220,9 +221,18 @@ export const GasSettingsModal: React.FC<GasSettingsModalProps> = ({
 
           {/* Web App URL Input and Test */}
           <div className="space-y-3 pt-2 border-t border-slate-100">
-            <label className="text-xs font-bold text-slate-700 block">
-              배포받은 구글 웹 앱 URL (Web App URL)
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-slate-700 block">
+                배포받은 구글 웹 앱 URL (Web App URL)
+              </label>
+              <button
+                type="button"
+                onClick={() => setUrl(DEFAULT_GAS_WEB_APP_URL)}
+                className="text-[11px] text-indigo-600 hover:text-indigo-800 font-semibold"
+              >
+                기본 학교 시트 주소 채우기
+              </button>
+            </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <input

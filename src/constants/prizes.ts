@@ -67,6 +67,7 @@ export const PRIZES: PrizeConfig[] = [
 export const TOTAL_PRIZES_QUOTA = PRIZES.reduce((sum, p) => sum + p.quota, 0); // 224
 
 export const DEFAULT_TEACHER_PASSWORD = '43234323';
+export const DEFAULT_GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5fZK7e_ZhPsAnJUFW0CiCN8fc6OsSHcBH9FHryh2UvDkAoPoF0q6ji5rLszUudJVdTA/exec';
 export const STORAGE_KEYS = {
   CLAIMS: 'school_lucky_draw_claims_v1',
   GAS_CONFIG: 'school_lucky_draw_gas_config_v1',
