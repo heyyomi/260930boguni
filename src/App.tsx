@@ -10,6 +10,7 @@ import { TeacherDashboard } from './components/TeacherDashboard';
 import { GasSettingsModal } from './components/GasSettingsModal';
 import { TeacherPasswordModal } from './components/TeacherPasswordModal';
 import { SmartboardCelebrationOverlay } from './components/SmartboardCelebrationOverlay';
+import { QrCodeShareModal } from './components/QrCodeShareModal';
 import { ClaimRecord, GoogleSheetsConfig, PrizeStat } from './types';
 import { PRIZES, STORAGE_KEYS } from './constants/prizes';
 import { 
@@ -31,6 +32,7 @@ export default function App() {
   // Modals
   const [isGasModalOpen, setIsGasModalOpen] = useState<boolean>(false);
   const [isTeacherAuthModalOpen, setIsTeacherAuthModalOpen] = useState<boolean>(false);
+  const [isQrModalOpen, setIsQrModalOpen] = useState<boolean>(false);
 
   // Real-time Celebratory Overlay for Classroom Smartboard
   const [celebrationClaim, setCelebrationClaim] = useState<ClaimRecord | null>(null);
@@ -339,6 +341,7 @@ export default function App() {
         isTeacherAuthenticated={isTeacherAuthenticated}
         onOpenTeacherAuth={() => setIsTeacherAuthModalOpen(true)}
         onOpenGasSettings={() => setIsGasModalOpen(true)}
+        onOpenQrModal={() => setIsQrModalOpen(true)}
         gasConfig={gasConfig}
         isSyncing={isSyncing}
         onManualSync={() => syncWithGas()}
@@ -370,6 +373,7 @@ export default function App() {
             onManualSync={() => syncWithGas()}
             onLockTeacherMode={handleLockTeacherMode}
             onTriggerCelebrationTest={handleTriggerCelebrationTest}
+            onOpenQrModal={() => setIsQrModalOpen(true)}
           />
         )}
       </main>
@@ -381,6 +385,14 @@ export default function App() {
             추억의 뽑기 수령 관리 시스템 · 학교 축제 및 학급 행사 지원
           </p>
           <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsQrModalOpen(true)}
+              className="hover:text-slate-600 transition-colors font-medium text-indigo-600"
+            >
+              QR 코드 공유
+            </button>
+            <span>·</span>
             <button
               type="button"
               onClick={() => setIsGasModalOpen(true)}
@@ -423,6 +435,12 @@ export default function App() {
         isOpen={isTeacherAuthModalOpen}
         onClose={() => setIsTeacherAuthModalOpen(false)}
         onSuccess={handleTeacherAuthSuccess}
+      />
+
+      {/* QR Code Sharing Modal */}
+      <QrCodeShareModal
+        isOpen={isQrModalOpen}
+        onClose={() => setIsQrModalOpen(false)}
       />
 
       {/* Smartboard Real-time Winner Celebration Popup with Confetti */}

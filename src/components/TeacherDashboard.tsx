@@ -22,7 +22,8 @@ import {
   Settings, 
   AlertTriangle,
   RotateCcw,
-  Plus
+  Plus,
+  QrCode
 } from 'lucide-react';
 import { ClaimRecord, FilterState, PrizeStat, GoogleSheetsConfig } from '../types';
 import { PRIZES, TOTAL_PRIZES_QUOTA } from '../constants/prizes';
@@ -39,6 +40,7 @@ interface TeacherDashboardProps {
   onManualSync: () => void;
   onLockTeacherMode: () => void;
   onTriggerCelebrationTest?: () => void;
+  onOpenQrModal?: () => void;
 }
 
 export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
@@ -53,6 +55,7 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
   onManualSync,
   onLockTeacherMode,
   onTriggerCelebrationTest,
+  onOpenQrModal,
 }) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [filters, setFilters] = useState<FilterState>({
@@ -241,6 +244,18 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
             <Printer className="w-4 h-4" />
             <span>인쇄</span>
           </button>
+
+          {onOpenQrModal && (
+            <button
+              type="button"
+              onClick={onOpenQrModal}
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition-colors"
+              title="디벗 및 스마트폰 접속용 QR 코드 띄우기"
+            >
+              <QrCode className="w-4 h-4 text-indigo-600" />
+              <span>QR 공유</span>
+            </button>
+          )}
 
           <button
             type="button"

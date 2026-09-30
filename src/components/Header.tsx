@@ -8,7 +8,8 @@ import {
   Unlock, 
   Cloud, 
   CloudOff, 
-  RefreshCw 
+  RefreshCw,
+  QrCode
 } from 'lucide-react';
 import { GoogleSheetsConfig } from '../types';
 
@@ -18,6 +19,7 @@ interface HeaderProps {
   isTeacherAuthenticated: boolean;
   onOpenTeacherAuth: () => void;
   onOpenGasSettings: () => void;
+  onOpenQrModal: () => void;
   gasConfig: GoogleSheetsConfig;
   isSyncing: boolean;
   onManualSync: () => void;
@@ -31,6 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
   isTeacherAuthenticated,
   onOpenTeacherAuth,
   onOpenGasSettings,
+  onOpenQrModal,
   gasConfig,
   isSyncing,
   onManualSync,
@@ -165,6 +168,17 @@ export const Header: React.FC<HeaderProps> = ({
                 className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50"
               >
                 <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin text-indigo-600' : ''}`} />
+              </button>
+
+              {/* QR Code Share Button */}
+              <button
+                type="button"
+                onClick={onOpenQrModal}
+                title="웹앱 공유 QR 코드 열기"
+                className="flex items-center gap-1 px-2 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
+              >
+                <QrCode className="w-3.5 h-3.5 text-indigo-600" />
+                <span className="hidden sm:inline">QR 공유</span>
               </button>
 
               {/* Settings / Discreet Teacher Unlock icon */}
