@@ -1,0 +1,8 @@
+{
+  "name": "추억의 뽑기 상품 수령 관리 시스템",
+  "description": "초·중·고 학급 및 축제 부스용 실시간 추억의 뽑기 상품 수령 기록 및 교사용 전자칠판 대시보드",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
